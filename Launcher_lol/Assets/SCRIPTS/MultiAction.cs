@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class MultiAction : MonoBehaviour
 {
     public Image m_valider;
-    public float time = 0f;
+    public float waitTime;
+    public bool m_ActiveValidate;
     public string m_failConnect;
     public string m_createAccount;
     public string m_questionMarkLink;
@@ -20,7 +21,7 @@ public class MultiAction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_ActiveValidate = false;
     }
 
     // Update is called once per frame
@@ -28,13 +29,12 @@ public class MultiAction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            while (m_valider.fillAmount < 1)
-            {
-                Debug.Log("lolilol");
-                time += Time.deltaTime;
-                m_valider.fillAmount = Mathf.Clamp(time, 0, 1); ;
-            }
-            
+            m_ActiveValidate = true;
+        }
+
+        if (m_ActiveValidate)
+        {
+            m_valider.fillAmount += 0.5f / waitTime * Time.deltaTime;
         }
     }
 
