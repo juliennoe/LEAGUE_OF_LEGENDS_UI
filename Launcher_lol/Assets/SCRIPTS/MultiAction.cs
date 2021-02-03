@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MultiAction : MonoBehaviour
 {
     public Image m_valider;
+    public Image m_fakebackground;
     public float waitTime;
     public bool m_ActiveValidate;
     public string m_failConnect;
@@ -36,6 +37,7 @@ public class MultiAction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             m_ActiveValidate = true;
+            m_fakebackground.GetComponent<Image>().enabled = true;
         }
 
         if (m_ActiveValidate)
@@ -73,6 +75,7 @@ public class MultiAction : MonoBehaviour
             m_MainSound.mute = true;
         }
     }
+
     public void FailConnectLol()
     {
         Application.OpenURL(m_failConnect);
