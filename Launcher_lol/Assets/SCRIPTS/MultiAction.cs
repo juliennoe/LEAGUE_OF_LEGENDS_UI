@@ -13,6 +13,11 @@ public class MultiAction : MonoBehaviour
     public string m_questionMarkLink;
     public string m_lolLink;
 
+    public GameObject m_mask;
+    public AudioSource m_MainSound;
+    public bool m_startsong;
+    public Toggle m_toggleSong;
+    
     public Image m_background;
     public Sprite m_wal1;
     public Sprite m_wal2;
@@ -22,6 +27,7 @@ public class MultiAction : MonoBehaviour
     void Start()
     {
         m_ActiveValidate = false;
+        m_startsong = false;
     }
 
     // Update is called once per frame
@@ -36,8 +42,37 @@ public class MultiAction : MonoBehaviour
         {
             m_valider.fillAmount += 0.5f / waitTime * Time.deltaTime;
         }
+
+        float m_maskValue = m_mask.GetComponent<CanvasGroup>().alpha;
+        
+
+        if (m_startsong == false)
+        {
+            if (m_maskValue > 0.8f)
+            {
+                m_startsong = true;
+                StartCoroutine(PlayMainSong());
+            }
+        }
     }
 
+    IEnumerator PlayMainSong()
+    {
+        m_MainSound.Play();
+        yield return null;
+    }
+
+    public void MuteOnOffSong()
+    {
+        if (m_toggleSong.isOn) 
+        {
+            m_MainSound.mute = false;
+        }
+        else
+        {
+            m_MainSound.mute = true;
+        }
+    }
     public void FailConnectLol()
     {
         Application.OpenURL(m_failConnect);
